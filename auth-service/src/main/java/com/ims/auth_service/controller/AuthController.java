@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -33,9 +35,9 @@ public class AuthController {
     }
 
     @PostMapping("/v1/signup")
-    public ResponseEntity<String> signup(@RequestBody AuthRequest request) {
+    public ResponseEntity<Map<String, String>> signup(@RequestBody AuthRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username already exists");
+            return ResponseEntity.badRequest().body(Map.of("message","Username already exists"));
         }
 
         Role defaultRole = roleRepository.findByName(RoleName.USER)
@@ -48,7 +50,7 @@ public class AuthController {
                 .role(defaultRole)
                 .build();
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(Map.of("message", "User registered successfully"));
     }
 
     @PostMapping("/v1/login")
