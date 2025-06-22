@@ -1,5 +1,4 @@
 <div class="dashboard-layout">
-    <!-- Header -->
     <header class="header">
         <h1 class="app-title">Incident Management System</h1>
         <div class="user-info">
@@ -8,29 +7,26 @@
         </div>
     </header>
 
-    <!-- Sidebar + Content Wrapper -->
     <div class="content-wrapper">
-        <!-- Sidebar -->
         <nav class="sidebar">
             <button mat-button [routerLink]="['dashboard']" class="sidebar-link">
-                <mat-icon>list</mat-icon>
-                Dashboard
+                <mat-icon class="sidebar-icon">list</mat-icon>
+                Dashboard Data
             </button>
             <button mat-button [routerLink]="['create']" class="sidebar-link">
-                <mat-icon>add_circle</mat-icon>
+                <mat-icon class="sidebar-icon">add_circle</mat-icon>
                 Create Incident
             </button>
             <button mat-button [routerLink]="['incidents']" class="sidebar-link">
-                <mat-icon>list</mat-icon>
+                <mat-icon class="sidebar-icon">list</mat-icon>
                 View Incidents
             </button>
             <button *ngIf="role === 'ADMIN'" mat-button [routerLink]="['purge']" class="sidebar-link">
-                <mat-icon>delete_forever</mat-icon>
+                <mat-icon class="sidebar-icon">delete_forever</mat-icon>
                 Purge Incidents
             </button>
         </nav>
 
-        <!-- Main content -->
         <main class="main-content">
             <router-outlet></router-outlet>
         </main>
