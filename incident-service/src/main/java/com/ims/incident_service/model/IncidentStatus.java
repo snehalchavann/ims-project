@@ -3,7 +3,8 @@ package com.ims.incident_service.model;
 public enum IncidentStatus {
     OPEN,
     RESOLVED,
-    ESCALATED;
+    ESCALATED,
+    IN_PROGRESS;
 
     //Method to verify if the input status is valid or not
     public static boolean isValid(String status) {

@@ -57,6 +57,16 @@ public class IncidentController {
     @DeleteMapping("/purge")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> purge() {
-        return ResponseEntity.ok("Purged " + incidentService.purgeResolvedIncidents() + " resolved incidents.");
+        int noOfPurgedIncidents = incidentService.purgeResolvedIncidents();
+        return ResponseEntity.ok("Purged " + noOfPurgedIncidents  + " resolved incidents.");
+    }
+
+    @GetMapping("/recentIncidents")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<Incident>> getRecentIncidents(Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        List<Incident> recentIncidents = incidentService.getRecentIncidents(authentication.getName(), isAdmin);
+        return ResponseEntity.ok(recentIncidents);
     }
 }
