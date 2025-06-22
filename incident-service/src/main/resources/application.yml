@@ -12,9 +12,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 server:
   port: 8082
 
 jwt:
   secret: R2V0TWVWZXJ5TG9uZ0tleUZvckVNU0FwcGxpY2F0aW9uTGlrZVZlcnlMb25n
-  expirationMs: 86400000
