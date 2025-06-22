@@ -8,16 +8,28 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      loadComponent: () => import('./admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
-    }
-    /*{
+      loadComponent: () => import('../component/common-dashboard-card/common-dashboard-card.component').then(m => m.CommonDashboardCardComponent)
+    },
+    {
+      path: 'dashboard',
+      loadComponent: () =>
+        import('../component/common-dashboard-card/common-dashboard-card.component').then(m => m.CommonDashboardCardComponent)
+    },
+    {
       path: 'create',
-      component: CreateIncidentComponent
+      loadComponent: () =>
+        import('../component/create-incident/create-incident.component').then(m => m.CreateIncidentComponent)
     },
     {
       path: 'incidents',
-      component: ViewIncidentsComponent
-    },*/
+      loadComponent: () =>
+        import('../component/view-incidents/view-incidents.component').then(m => m.ViewIncidentsComponent)
+    },
+    {
+      path: 'purge',
+      loadComponent: () =>
+        import('../component/purge-incidents/purge-incidents.component').then(m => m.PurgeIncidentsComponent)
+    }
   ]
 }];
 

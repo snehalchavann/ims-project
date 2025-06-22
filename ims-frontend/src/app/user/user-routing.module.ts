@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardLayoutComponent } from '../component/dashboard-layout/dashboard-layout.component';
-import { CreateIncidentComponent } from '../component/create-incident/create-incident.component';
-import { ViewIncidentsComponent } from '../component/view-incidents/view-incidents.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,7 +8,12 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      loadComponent: () => import('./user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent),
+      loadComponent: () => import('../component/common-dashboard-card/common-dashboard-card.component').then(m => m.CommonDashboardCardComponent)
+    },
+    {
+      path: 'dashboard',
+      loadComponent: () =>
+        import('../component/common-dashboard-card/common-dashboard-card.component').then(m => m.CommonDashboardCardComponent)
     },
     {
       path: 'create',

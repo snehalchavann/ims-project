@@ -1,19 +1,24 @@
 <div class="create-incident-container">
-    <mat-card>
-        <mat-card-title>Create New Incident</mat-card-title>
+    <mat-card class="incident-card-class">
+        <div class="form-header">
+            <h2 class="form-title">{{ mode === 'create' ? 'Create New Incident' : 'Update Incident Status' }}</h2>
+            <button *ngIf="dialogRef" mat-icon-button (click)="onClose()" class="close-button">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
         <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="fill" class="full-width">
+            <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Title</mat-label>
                 <input matInput placeholder="Incident title" formControlName="title" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width">
+            <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Description</mat-label>
-                <textarea matInput placeholder="Details about the incident" formControlName="description"
+                <textarea matInput placeholder="Describe the incident" formControlName="description"
                     rows="4"></textarea>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width">
+            <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Priority</mat-label>
                 <mat-select formControlName="priority">
                     <mat-option value="Low">Low</mat-option>
@@ -22,9 +27,19 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="full-width" *ngIf="mode === 'update'">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option value="OPEN">Open</mat-option>
+                    <mat-option value="IN_PROGRESS">In Progress</mat-option>
+                    <mat-option value="ESCALATED">Escalated</mat-option>
+                    <mat-option value="RESOLVED">Resolved</mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <div class="submit-button-wrapper">
-                <button mat-raised-button color="primary" type="submit"
-                    [disabled]="incidentForm.invalid">Submit</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="incidentForm.invalid">{{ mode ===
+                    'create' ? 'Create' : 'Update Status' }}</button>
             </div>
         </form>
     </mat-card>
