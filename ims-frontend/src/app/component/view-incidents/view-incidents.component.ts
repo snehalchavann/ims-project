@@ -87,7 +87,7 @@ export class ViewIncidentsComponent {
     this.filteredIncidents = this.incidents.filter(incident => {
       const matchPriority = this.filter.priority ? incident.priority === this.filter.priority : true;
       const matchStatus = this.filter.status ? incident.status === this.filter.status : true;
-      const matchDate = this.filter.date ? new Date(incident.createdAt).toDateString() === new Date(this.filter.date).toDateString() : true;
+      const matchDate = this.filter.date ? new Date(incident.createdAt).toLocaleDateString() === new Date(this.filter.date).toLocaleDateString() : true;
       return matchPriority && matchStatus && matchDate;
     });
   }
