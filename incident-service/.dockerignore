@@ -1,0 +1,22 @@
+#build output
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+#IDE files
+*.iml
+.idea/
+*.classpath
+*.project
+*.settings/
+
+#OS files
+.DS_Store
+Thumbs.db
+
+#git files
+.git
+.gitignore
+
+#log files
+*.log
+logs/

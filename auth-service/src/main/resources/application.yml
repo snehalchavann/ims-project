@@ -3,9 +3,9 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/ims_auth
-    username: postgres
-    password: Data@1234
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:ims_auth}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:Data@1234}
 
   jpa:
     hibernate:
@@ -13,8 +13,8 @@ spring:
     show-sql: true
 
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
 
 jwt:
-  secret: R2V0TWVWZXJ5TG9uZ0tleUZvckVNU0FwcGxpY2F0aW9uTGlrZVZlcnlMb25n
+  secret: ${JWT_SECRET:R2V0TWVWZXJ5TG9uZ0tleUZvckVNU0FwcGxpY2F0aW9uTGlrZVZlcnlMb25n}
   expirationMs: 86400000
