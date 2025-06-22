@@ -27,10 +27,29 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getUserName(): string {
+    const token = this.getToken();
+    if (!token) return 'Guest';
+
+    const payload = token.split('.')[1];
+    try {
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload.sub || 'Guest';
+    } catch (e) {
+      console.error('Invalid token', e);
+      return 'Guest';
+    }
+  }
+
   getRole(): string {
     const token = this.getToken();
     if (!token) return '';
     const data = JSON.parse(atob(token.split('.')[1]));
     return data.role;
+  }
+
+  isAdmin(): boolean {
+    const role = this.getRole();
+    return role === 'ADMIN';
   }
 }

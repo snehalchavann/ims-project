@@ -1,6 +1,22 @@
 .create-incident-container {
-    max-width: 600px;
-    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.incident-card-class {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 .full-width {
@@ -9,8 +25,20 @@
 }
 
 .submit-button-wrapper {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.form-header {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    align-items: center;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
 }

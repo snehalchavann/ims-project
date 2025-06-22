@@ -1,0 +1,17 @@
+<div class="purge-container">
+    <mat-card class="purge-card">
+        <div class="purge-header">
+            <mat-icon class="purge-icon" color="warn">delete_forever</mat-icon>
+            <h2 class="purge-title">Purge Resolved Incidents</h2>
+        </div>
+        <p class="purge-warning">
+            This action will <strong>permanently delete</strong> all resolved incidents from the system.
+        </p>
+        <div class="purge-button-wrapper">
+            <button mat-raised-button color="warn" (click)="onPurge()">
+                <mat-icon>warning</mat-icon>
+                Purge Now
+            </button>
+        </div>
+    </mat-card>
+</div>

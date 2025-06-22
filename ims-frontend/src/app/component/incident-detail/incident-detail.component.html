@@ -1,0 +1,37 @@
+<h2 class="dialog-title">Incident Details</h2>
+
+<div class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput [value]="data.title" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [value]="data.description" readonly class="description-textarea" rows="6"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Priority</mat-label>
+        <input matInput [value]="data.priority" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <input matInput [value]="data.status" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Created By</mat-label>
+        <input matInput [value]="data.createdBy" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date</mat-label>
+        <input matInput [value]="data.createdAt | date:'MM/dd/yyyy' " readonly>
+    </mat-form-field>
+</div>
+
+<div class="dialog-actions">
+    <button mat-raised-button color="primary" (click)="onClose()">Close</button>
+</div>
