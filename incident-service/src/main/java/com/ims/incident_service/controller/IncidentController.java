@@ -41,6 +41,7 @@ public class IncidentController {
         List<Incident> result = isAdmin
                 ? this.incidentService.getAllIncidents()
                 : incidentService.getUserIncidents(authentication.getName());
+
         return ResponseEntity.ok(result);
     }
 

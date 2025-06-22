@@ -33,8 +33,7 @@ public class RedisConfiguration {
         return (builder) -> builder
                 .withCacheConfiguration("dashboardCache",
                         RedisCacheConfiguration.defaultCacheConfig()
-                                .entryTtl(Duration.ofMinutes(10))
-                                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(customSerializer())))
+                                .entryTtl(Duration.ofMinutes(10)))
                 .withCacheConfiguration("recentIncidentCache",
                         RedisCacheConfiguration.defaultCacheConfig()
                                 .entryTtl(Duration.ofMinutes(5))
