@@ -7,6 +7,8 @@ import com.ims.incident_service.model.IncidentStatus;
 import com.ims.incident_service.repository.IncidentRepository;
 import com.ims.incident_service.repository.IncidentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,11 @@ import java.util.List;
 public class IncidentServiceImpl implements IncidentService {
     private final IncidentRepository incidentRepository;
 
+    @CacheEvict(value = {
+            "dashboardCache",
+            "recentIncidentCache",
+            "incidentCache"
+    }, allEntries = true)
     @Override
     public Incident createIncident(IncidentDTO dto, String username) {
         Incident incident = new Incident();
@@ -29,6 +36,7 @@ public class IncidentServiceImpl implements IncidentService {
         return incidentRepository.save(incident);
     }
 
+    @Cacheable(key = "'user_'+#username", value = "incidentCache")
     @Override
     public List<Incident> getUserIncidents(String username) {
         return incidentRepository.findByCreatedBy(username);
@@ -39,6 +47,11 @@ public class IncidentServiceImpl implements IncidentService {
         return incidentRepository.findAll();
     }
 
+    @CacheEvict(value = {
+            "dashboardCache",
+            "recentIncidentCache",
+            "incidentCache"
+    }, allEntries = true)
     @Override
     public Incident updateStatus(Long id, IncidentStatus status) {
         Incident incident = incidentRepository.findById(id).orElseThrow(() -> new IncidentNotFoundException("Incident" + id + " not found"));
@@ -46,6 +59,11 @@ public class IncidentServiceImpl implements IncidentService {
         return incidentRepository.save(incident);
     }
 
+    @CacheEvict(value = {
+            "dashboardCache",
+            "recentIncidentCache",
+            "incidentCache"
+    }, allEntries = true)
     @Override
     public int purgeResolvedIncidents() {
         List<Incident> incidents = incidentRepository.findAll().stream()
@@ -54,6 +72,7 @@ public class IncidentServiceImpl implements IncidentService {
         return incidents.size();
     }
 
+    @Cacheable(key = "#isAdmin ? 'admin' : #username", value = "recentIncidentCache")
     public List<Incident> getRecentIncidents(String username, boolean isAdmin){
         if(isAdmin){
             return incidentRepository.findTop5ByOrderByCreatedAtDesc();

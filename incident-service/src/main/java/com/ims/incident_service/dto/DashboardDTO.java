@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class DashboardDTO {
+public class DashboardDTO implements Serializable {
     private long totalIncidents;
     private long totalOpenIncidents;
     private long totalResolvedIncidents;

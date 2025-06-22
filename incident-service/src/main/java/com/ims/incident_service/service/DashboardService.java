@@ -5,6 +5,7 @@ import com.ims.incident_service.model.Incident;
 import com.ims.incident_service.model.IncidentStatus;
 import com.ims.incident_service.repository.IncidentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class DashboardService {
     private final IncidentRepository incidentRepository;
 
+    @Cacheable(key = "'admin'", value = "dashboardCache")
     public DashboardDTO getDashBoardMetrics(){
         long totalIncidents = incidentRepository.count();
         long totalEscalatedIncidents = incidentRepository.countByStatus(IncidentStatus.valueOf("ESCALATED"));
@@ -27,6 +29,7 @@ public class DashboardService {
         return new DashboardDTO(totalIncidents, totalOpenIncidents, totalResolvedIncidents, totalInProgressIncidents, totalEscalatedIncidents, priorityCountMap);
     }
 
+    @Cacheable(key = "#username", value = "dashboardCache")
     public DashboardDTO getUserDashboardMetrics(String username){
         List<Incident> userIncidentList = incidentRepository.findByCreatedBy(username);
 
