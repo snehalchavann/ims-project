@@ -15,12 +15,12 @@ public class Incident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private LocalDateTime createdAt;
+    private String createdBy;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String priority;
     @Enumerated(EnumType.STRING)
     private IncidentStatus status;
-    private LocalDateTime createdAt;
-
-    private String createdBy;
+    private String title;
 }

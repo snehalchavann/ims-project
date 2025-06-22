@@ -53,4 +53,12 @@ public class IncidentServiceImpl implements IncidentService {
         incidentRepository.deleteAll(incidents);
         return incidents.size();
     }
+
+    public List<Incident> getRecentIncidents(String username, boolean isAdmin){
+        if(isAdmin){
+            return incidentRepository.findTop5ByOrderByCreatedAtDesc();
+        }else{
+            return incidentRepository.findTop5ByCreatedByOrderByCreatedAtDesc(username);
+        }
+    }
 }
