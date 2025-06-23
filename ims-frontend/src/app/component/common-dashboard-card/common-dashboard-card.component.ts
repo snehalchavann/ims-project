@@ -9,6 +9,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { DashboardData, DashboardService } from '../../services/dashboard.service';
 import { IncidentService } from '../../services/incident.service';
 import { AuthService } from '../../services/auth.service';
+import { NotifyUpdateService } from '../../services/notify-update.service';
 
 @Component({
   selector: 'app-common-dashboard-card',
@@ -54,10 +55,19 @@ export class CommonDashboardCardComponent {
 
   constructor(private dashboardService: DashboardService,
     private authService: AuthService,
-    private incidentService: IncidentService) { }
+    private incidentService: IncidentService,
+    private notifyUpdateService: NotifyUpdateService) { }
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
+    this.loadDashboardData();
+
+    this.notifyUpdateService.update$.subscribe(() => {
+      this.loadDashboardData();
+    })
+  }
+
+  private loadDashboardData(): void {
     if (this.isAdmin) {
       this.dashboardService.getAdminDashboard().subscribe({
         next: (data) => this.setDataForDashboard(data),
@@ -77,6 +87,7 @@ export class CommonDashboardCardComponent {
   }
 
   private setDataForDashboard(data: DashboardData): void {
+    this.dashboardData = data;
     this.statusChartData = {
       labels: ['Open', 'In-Progress', 'Escalated', 'Resolved'],
       datasets: [{

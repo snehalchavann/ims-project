@@ -65,9 +65,14 @@ public class IncidentServiceImpl implements IncidentService {
             "incidentCache"
     }, allEntries = true)
     @Override
-    public int purgeResolvedIncidents() {
-        List<Incident> incidents = incidentRepository.findAll().stream()
-                .filter(incident -> incident.getStatus().equals(IncidentStatus.RESOLVED)).toList();
+    public int purgeResolvedIncidents(int noOfDays) {
+        List<Incident> incidents;
+        if(noOfDays == 0){
+            incidents = incidentRepository.findIncidentByStatus(IncidentStatus.RESOLVED);
+        }else{
+            LocalDateTime oldDate = LocalDateTime.now().minusDays(noOfDays);
+            incidents = incidentRepository.findIncidentByStatusAndCreatedAtBefore(IncidentStatus.RESOLVED, oldDate);
+        }
         incidentRepository.deleteAll(incidents);
         return incidents.size();
     }

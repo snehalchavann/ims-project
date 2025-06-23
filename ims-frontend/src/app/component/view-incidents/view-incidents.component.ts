@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { IncidentDetailComponent } from '../incident-detail/incident-detail.component';
+import { NotifyUpdateService } from '../../services/notify-update.service';
 
 @Component({
   selector: 'app-view-incidents',
@@ -44,9 +45,13 @@ export class ViewIncidentsComponent {
   columns: string[] = ['id', 'title', 'priority', 'status', 'Date', 'actions'];
   expandedIncident: any | null = null;
   constructor(private incidentService: IncidentService, private dialog: MatDialog,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private notifyUpdateService: NotifyUpdateService) { }
 
   ngOnInit() {
+    this.notifyUpdateService.update$.subscribe(() => {
+      this.loadIncidents();
+    })
     this.isAdmin = this.authService.isAdmin();
     this.loadIncidents();
   }
