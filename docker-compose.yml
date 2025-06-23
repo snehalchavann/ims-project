@@ -54,7 +54,9 @@ services:
       JWT_SECRET: ${JWT_SECRET}
 
   frontend:
-    build: ./ims-frontend
+    build:
+      context: .
+      dockerfile: ims-frontend/Dockerfile
     container_name: ims_frontend
     ports:
       - "4200:80"
