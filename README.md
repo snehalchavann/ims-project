@@ -32,9 +32,9 @@ SERVER_PORT=8082
 
 JWT_SECRET=aW5lZWQ0NGNoYXJhY3RlcnN0b2dlbmVyYXRlMjU2Yml0c29mZW5jb2RlZHN0cmluZw
 ```
-## Step 3: Run the Application using following command
+## Step 3: Run the Application using following command inside ims-project
 ```ini
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Step 4: Access the application
