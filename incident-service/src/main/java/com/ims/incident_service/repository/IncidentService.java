@@ -11,6 +11,6 @@ public interface IncidentService {
     List<Incident> getUserIncidents(String username);
     List<Incident> getAllIncidents();
     Incident updateStatus(Long id, IncidentStatus status);
-    int purgeResolvedIncidents();
+    int purgeResolvedIncidents(int noOfDays);
     List<Incident> getRecentIncidents(String username, boolean isAdmin);
 }

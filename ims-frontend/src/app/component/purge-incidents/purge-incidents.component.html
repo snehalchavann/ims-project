@@ -7,6 +7,23 @@
         <p class="purge-warning">
             This action will <strong>permanently delete</strong> all resolved incidents from the system.
         </p>
+        <mat-form-field appearance="fill" class="threshold-select">
+            <mat-label>Purge Resolved Incidents</mat-label>
+            <mat-select [(value)]="selectedOption" (selectionChange)="onOptionChange($event.value)">
+                <mat-option value="ALL">All Resolved</mat-option>
+                <mat-option value="30">Older than 30 days</mat-option>
+                <mat-option value="60">Older than 60 days</mat-option>
+                <mat-option value="90">Older than 90 days</mat-option>
+                <mat-option value="CUSTOM">Other</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="showCustomInput" class="custom-input">
+            <mat-form-field>
+                <mat-label>Enter number of days</mat-label>
+                <input matInput type="number" [(ngModel)]="customDays" min="1" />
+            </mat-form-field>
+        </div>
         <div class="purge-button-wrapper">
             <button mat-raised-button color="warn" (click)="onPurge()">
                 <mat-icon>warning</mat-icon>

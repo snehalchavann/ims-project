@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Incident, IncidentService } from '../../services/incident.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { DashboardService } from '../../services/dashboard.service';
+import { NotifyUpdateService } from '../../services/notify-update.service';
 
 @Component({
   selector: 'app-create-incident',
@@ -33,6 +35,7 @@ export class CreateIncidentComponent {
   constructor(
     private fb: FormBuilder,
     private incidentService: IncidentService,
+    private notifyUpdateService: NotifyUpdateService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: { mode: 'create' | 'update', incident?: Incident },
     @Optional() public dialogRef?: MatDialogRef<CreateIncidentComponent>
   ) { }
@@ -60,6 +63,7 @@ export class CreateIncidentComponent {
       if (this.mode == 'create') {
         this.incidentService.createIncident(this.incidentForm.value).subscribe({
           next: () => {
+            this.notifyUpdateService.notifyUpdate();
             alert('Incident submitted successfully!');
             this.incidentForm.reset();
           },
@@ -71,6 +75,7 @@ export class CreateIncidentComponent {
         const status = this.incidentForm.get('status')?.value;
         this.incidentService.updateStatus(this.incident.id, status).subscribe({
           next: (response) => {
+            this.notifyUpdateService.notifyUpdate();
             alert(`Incident id ${this.incident?.id} status updated to ${response.status}`);
           },
           error: () => {

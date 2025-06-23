@@ -57,8 +57,8 @@ public class IncidentController {
 
     @DeleteMapping("/purge")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> purge() {
-        int noOfPurgedIncidents = incidentService.purgeResolvedIncidents();
+    public ResponseEntity<?> purge(@RequestParam(defaultValue = "30") int noOfDays) {
+        int noOfPurgedIncidents = incidentService.purgeResolvedIncidents(noOfDays);
         return ResponseEntity.ok("Purged " + noOfPurgedIncidents  + " resolved incidents.");
     }
 
