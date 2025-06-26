@@ -45,8 +45,12 @@ export class PurgeIncidentsComponent {
         daysToPurge = this.customDays;
       } else if (this.selectedOption === 'ALL') {
         daysToPurge = 0;
+      } else {
+        daysToPurge = +this.selectedOption;
       }
-      this.incidentService.purgeIncident().subscribe({
+
+      console.log("daysToPurge" + daysToPurge);
+      this.incidentService.purgeIncident(daysToPurge).subscribe({
         next: (response) => {
           this.snackBar.open(response, 'Close', { duration: 3000, panelClass: 'success-snackbar' });
         },

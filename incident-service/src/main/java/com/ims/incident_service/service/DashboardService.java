@@ -26,7 +26,7 @@ public class DashboardService {
 
         Map<String, Long> priorityCountMap = incidentRepository.findAll().stream().collect(Collectors.groupingBy(Incident::getPriority, Collectors.counting()));
 
-        return new DashboardDTO(totalIncidents, totalOpenIncidents, totalResolvedIncidents, totalInProgressIncidents, totalEscalatedIncidents, priorityCountMap);
+        return new DashboardDTO(totalIncidents, totalOpenIncidents, totalResolvedIncidents,totalEscalatedIncidents, totalInProgressIncidents, priorityCountMap);
     }
 
     @Cacheable(key = "#username", value = "dashboardCache")
@@ -41,6 +41,6 @@ public class DashboardService {
 
         Map<String, Long> priorityCountMap = userIncidentList.stream().collect(Collectors.groupingBy(Incident::getPriority, Collectors.counting()));
 
-        return new DashboardDTO(totalIncidents, totalOpenIncidents, totalResolvedIncidents, totalInProgressIncidents, totalEscalatedIncidents, priorityCountMap);
+        return new DashboardDTO(totalIncidents, totalOpenIncidents, totalResolvedIncidents,totalEscalatedIncidents, totalInProgressIncidents, priorityCountMap);
     }
 }

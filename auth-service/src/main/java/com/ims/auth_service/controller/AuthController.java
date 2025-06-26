@@ -4,6 +4,7 @@ import com.ims.auth_service.model.*;
 import com.ims.auth_service.repository.RoleRepository;
 import com.ims.auth_service.repository.UserRepository;
 import com.ims.auth_service.security.JwtTokenProvider;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
+@Log4j2
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -50,6 +52,7 @@ public class AuthController {
                 .role(defaultRole)
                 .build();
         userRepository.save(user);
+        log.info("User {} has been signed up", user.getUsername());
         return ResponseEntity.ok(Map.of("message", "User registered successfully"));
     }
 
@@ -63,6 +66,7 @@ public class AuthController {
         }
 
         String token = jwtTokenProvider.generateToken(user.getUsername(), user.getRole().getName().name());
+       log.info("User {} has been logged in", user.getUsername());
         return ResponseEntity.ok(new AuthResponse(token));
     }
 }
