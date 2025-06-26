@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -37,8 +37,11 @@ export class IncidentService {
     return this.http.put(`${API_URL}/${id}/status?status=${status}`, { responseType: 'text' });
   }
 
-  purgeIncident(): Observable<any> {
-    return this.http.delete(`${API_URL}/purge`, { responseType: 'text' });
+  purgeIncident(noOfDays: number = 30): Observable<any> {
+    return this.http.delete(`${API_URL}/purge`, {
+      params: new HttpParams().set('noOfDays', noOfDays.toString()),
+      responseType: 'text'
+    });
   }
 
   getRecentIncidents(): Observable<any> {

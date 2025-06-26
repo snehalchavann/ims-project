@@ -6,6 +6,7 @@ import com.ims.incident_service.model.IncidentStatus;
 import com.ims.incident_service.repository.IncidentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Log4j2
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/incidents")
@@ -29,9 +31,11 @@ public class IncidentController {
         if(result.hasErrors()){
             List<String> errors = result.getFieldErrors().stream()
                     .map(ObjectError::getDefaultMessage).toList();
+            log.error("Validation error occurred: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
         Incident incident = incidentService.createIncident(incidentDTO, authentication.getName());
+        log.info("Created incident {}", incident.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(incident);
     }
 
@@ -42,6 +46,7 @@ public class IncidentController {
                 ? this.incidentService.getAllIncidents()
                 : incidentService.getUserIncidents(authentication.getName());
 
+        log.info("Retrieved {} incidents", result.size());
         return ResponseEntity.ok(result);
     }
 
@@ -52,6 +57,7 @@ public class IncidentController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid status value.");
         }
         Incident incident = incidentService.updateStatus(id, IncidentStatus.valueOf(status));
+        log.info("Updated incident {} with status {}", incident.getId(), incident.getStatus());
         return ResponseEntity.ok(incident);
     }
 
@@ -59,6 +65,7 @@ public class IncidentController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> purge(@RequestParam(defaultValue = "30") int noOfDays) {
         int noOfPurgedIncidents = incidentService.purgeResolvedIncidents(noOfDays);
+        log.info("Purged {} incidents", noOfPurgedIncidents);
         return ResponseEntity.ok("Purged " + noOfPurgedIncidents  + " resolved incidents.");
     }
 
@@ -68,6 +75,7 @@ public class IncidentController {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         List<Incident> recentIncidents = incidentService.getRecentIncidents(authentication.getName(), isAdmin);
+        log.info("Retrieved recent {} incidents", recentIncidents.size());
         return ResponseEntity.ok(recentIncidents);
     }
 }
